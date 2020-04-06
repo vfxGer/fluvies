@@ -32,6 +32,7 @@ def main():
                 raise Exception("Title %s not found" % clean_name)
             print("https://www.imdb.com/title/" + r['imdbID'])
         else:
+            # print(r['Year'])
             found = False
             for d in r['Ratings']:
                 if d['Source']=='Internet Movie Database':
