@@ -25,21 +25,22 @@ def main():
         r= requests.get("http://www.omdbapi.com/?apikey=%s&t=%s&type=movie"%(
             secrets.api_key, 
             clean_name)).json()
-        if True:
+        if False:
             try:
                 id_ = r['imdbID']
             except KeyError:
                 raise Exception("Title %s not found" % clean_name)
             print("https://www.imdb.com/title/" + r['imdbID'])
         else:
+            print(r['Runtime'].strip(" min"))
             # print(r['Year'])
-            found = False
-            for d in r['Ratings']:
-                if d['Source']=='Internet Movie Database':
-                    print(d['Value'].strip("/10"))
-                    found = True
-            if not found:
-                raise Exception(r)
+            # found = False
+            # for d in r['Ratings']:
+            #     if d['Source']=='Internet Movie Database':
+            #         print(d['Value'].strip("/10"))
+            #         found = True
+            # if not found:
+            #     raise Exception(r)
 
 if __name__=="__main__":
     main()
