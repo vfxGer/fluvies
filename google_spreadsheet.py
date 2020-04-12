@@ -1,15 +1,14 @@
-from __future__ import print_function
 import pickle
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-
+import secrets
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1n0VpO6nk2Zr3yNrE00PrmXeKInooJPl1Y1h5j2riwGE'
+
 SAMPLE_RANGE_NAME = 'Sheet1'
 
 def get_movie_list():
@@ -18,7 +17,7 @@ def get_movie_list():
 
     # Call the Sheets API
     sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    result = sheet.values().get(spreadsheetId=secrets.SAMPLE_SPREADSHEET_ID,
                                 range='Sheet1!B1:B').execute()
     values = result.get('values', [])
 

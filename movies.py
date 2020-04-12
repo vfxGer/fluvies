@@ -1,10 +1,12 @@
 import string
 import urllib.parse
-import requests
-import google_spreadsheet
 import logging 
 
 import secrets
+
+import requests
+
+import google_spreadsheet
 
 def get_movie_list():
     return google_spreadsheet.get_movie_list()
@@ -19,11 +21,15 @@ def is_on_netflix(movie_name):
 
 def main():
     lines = get_movie_list()
+    print("Number,Film Name,On Netflix,IMDB,IDMB Score,Year,Duration in minutes")
     i = 1
     for movie in lines:
         print(i, end=',')
         i+=1
-        print(movie, end=',')
+        if "," in movie:
+            print('"%s"' % movie, end=',')
+        else:
+            print(movie, end=',')
         on_netflix = is_on_netflix(movie)
         if on_netflix is None:
             print(" ", end=',')
@@ -47,7 +53,7 @@ def main():
             id_ = r['imdbID']
         except KeyError:
                  raise Exception("Title %s not found" % clean_name)
-        print("https://www.imdb.com/title/" + r['imdbID'], ",")
+        print("https://www.imdb.com/title/" + r['imdbID'], end=",")
         for d in r['Ratings']:
             if d['Source']=='Internet Movie Database':
                 print(d['Value'].strip("/10"), end=",")
@@ -56,17 +62,7 @@ def main():
             raise Exception("IMDB rating not found in: %s "% r)
 
         print(r['Year'], end=",")
-        # # if True:
-        #     try:
-        #         id_ = r['imdbID']
-        #     except KeyError:
-        #         raise Exception("Title %s not found" % clean_name)
-        #     print("https://www.imdb.com/title/" + r['imdbID'])
-        # else:
-        #     found = False
-        #     
-        #     if not found:
-        #         raise Exception(r)
+        print(r['Runtime'].strip(" min"), end=",")
         print("")
 if __name__=="__main__":
     main()

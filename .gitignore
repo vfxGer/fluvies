@@ -1,3 +1,7 @@
 secrets*
+<<<<<<< HEAD
 credentials.json
 token.*
+=======
+credentials.json
+>>>>>>> master
